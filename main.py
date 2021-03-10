@@ -1,4 +1,5 @@
 import time
+import matplotlib.pyplot as plt
 # demo yhtälöryhmän ratkaisuajoista LU- ja Gaussin hajotelmia käyttämällä
 #määritellään laskettavat matriisit
 A = [[2, 3, 1],
@@ -162,15 +163,70 @@ def aja_Gaussin_aika(MatrixA,vectorB,vektorien_määrä):
 #print("Gaussin hajotelmalla:")
 #print(Gaussin_hajotelma(A,B))
 start = time.time()
-print("LU-hajotelman suoritusajat. 3x3,5x5,10x10 b-vektorien määrillä 50000, 100000, 150000 ja 200000")
-print("kukin vaakarivi vastaa yhtä A-matriisin kokoa")
-print(aja_LU_aika(A,B,B_vektorien_määrä))#matriisin koko:3x3
-print(aja_LU_aika(A2,B2,B_vektorien_määrä))#matriisin koko:5x5
-print(aja_LU_aika(A3,B3,B_vektorien_määrä))#matriisin koko:10x10
-print()
-print("Gaussin hajotelman ajat:")
-print(aja_Gaussin_aika(A,B,B_vektorien_määrä))#matriisin koko:3x3
-print(aja_Gaussin_aika(A2,B2,B_vektorien_määrä))#matriisin koko:5x5
-print(aja_Gaussin_aika(A3,B3,B_vektorien_määrä))#matriisin koko:10x10
+
+
+#LU-hajotelman suoritusajat. 3x3,5x5,10x10 b-vektorien määrillä 50000, 100000, 150000 ja 200000
+#kukin vaakarivi vastaa yhtä A-matriisin kokoa
+lu3 = aja_LU_aika(A,B,B_vektorien_määrä)#matriisin koko:3x3
+lu5 = aja_LU_aika(A2,B2,B_vektorien_määrä)#matriisin koko:5x5
+lu10 = aja_LU_aika(A3,B3,B_vektorien_määrä)#matriisin koko:10x10
+
+#Gaussin hajotelman ajat
+g3 = aja_Gaussin_aika(A,B,B_vektorien_määrä)#matriisin koko:3x3
+g5 = aja_Gaussin_aika(A2,B2,B_vektorien_määrä)#matriisin koko:5x5
+g10 = aja_Gaussin_aika(A3,B3,B_vektorien_määrä)#matriisin koko:10x10
 end = time.time()
-print("ohjelmanajamiseen kätetty aika: "+str(end-start))
+koot_x = [3,5,10]
+#ajat
+#LU
+#B-vektorien määrä 50000
+lu_y1 = [lu3[0],lu5[0],lu10[0]]
+#B-vektorien määrä 100000
+lu_y2 = [lu3[1],lu5[1],lu10[1]]
+#B-vektorien määrä 150000
+lu_y3 = [lu3[2],lu5[2],lu10[2]]
+#B-vektorien määrä 200000
+lu_y4 = [lu3[3],lu5[3],lu10[3]]
+#Gaussin
+#B-vektorien määrä 50000
+g_y1 = [g3[0],g5[0],g10[0]]
+#B-vektorien määrä 100000
+g_y2 = [g3[1],g5[1],g10[1]]
+#B-vektorien määrä 150000
+g_y3 = [g3[2],g5[2],g10[2]]
+#B-vektorien määrä 200000
+g_y4 = [g3[3],g5[3],g10[3]]
+
+plt.plot(koot_x,lu_y1)
+plt.plot(koot_x,g_y1)
+plt.legend(['LU-50000','G-50000'])
+plt.xlabel('A-matriisin koot')
+plt.ylabel('Aika')
+plt.title('Gaussin ja LU-hajotelmat vertailu')
+plt.show()
+
+plt.plot(koot_x,lu_y2)
+plt.plot(koot_x,g_y2)
+plt.legend(['LU-100000','G-100000'])
+plt.xlabel('A-matriisin koot')
+plt.ylabel('Aika')
+plt.title('Gaussin ja LU-hajotelmat vertailu')
+plt.show()
+
+plt.plot(koot_x,lu_y3)
+plt.plot(koot_x,g_y3)
+plt.legend(['LU-150000','G-150000'])
+plt.xlabel('A-matriisin koot')
+plt.ylabel('Aika')
+plt.title('Gaussin ja LU-hajotelmat vertailu')
+plt.show()
+
+plt.plot(koot_x,lu_y4)
+plt.plot(koot_x,g_y4)
+plt.legend(['LU-200000','G-200000'])
+plt.xlabel('A-matriisin koot')
+plt.ylabel('Aika')
+plt.title('Gaussin ja LU-hajotelmat vertailu')
+plt.show()
+
+print("Laskentaan kätetty aika: "+str(end-start))
